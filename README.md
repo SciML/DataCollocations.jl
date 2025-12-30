@@ -163,3 +163,4 @@ If you use DataCollocations.jl in your research, please cite the collocation met
   url={https://doi.org/10.1515/sagmb-2020-0025}
 }
 ```
+
