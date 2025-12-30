@@ -70,6 +70,10 @@ data from intermediate timesteps. In this case, pass any of the methods like
 `QuadraticInterpolation` as `interp`, and the timestamps to sample from as `tpoints_sample`.
 """
 function collocate_data(data, tpoints, kernel = TriangularKernel(), bandwidth = nothing)
+    if !fast_scalar_indexing(data) || !fast_scalar_indexing(tpoints)
+        throw(ArgumentError("collocate_data requires arrays that support fast scalar indexing. " *
+                            "GPU arrays are not supported. Please use CPU arrays instead."))
+    end
     _one = oneunit(first(data))
     _zero = zero(first(data))
     e1 = [_one; _zero]
