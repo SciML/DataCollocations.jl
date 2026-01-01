@@ -11,7 +11,7 @@ struct LogisticKernel <: CollocationKernel end
 struct SigmoidKernel <: CollocationKernel end
 struct SilvermanKernel <: CollocationKernel end
 
-function calckernel(kernel, t::T) where {T}
+function calckernel(kernel::CollocationKernel, t::T) where {T}
     abst = abs(t)
     return ifelse(abst > 1, T(0), calckernel(kernel, t, abst))
 end
@@ -30,13 +30,15 @@ function calckernel(::SilvermanKernel, t::T) where {T}
     return sin(abs(t) / T(2) + π / T(4)) * T(0.5) * exp(-abs(t) / sqrt(T(2)))
 end
 
-construct_t1(t, tpoints) = hcat(ones(eltype(tpoints), length(tpoints)), tpoints .- t)
+function construct_t1(t::Number, tpoints::AbstractVector)
+    return hcat(ones(eltype(tpoints), length(tpoints)), tpoints .- t)
+end
 
-function construct_t2(t, tpoints)
+function construct_t2(t::Number, tpoints::AbstractVector)
     return hcat(ones(eltype(tpoints), length(tpoints)), tpoints .- t, (tpoints .- t) .^ 2)
 end
 
-function construct_w(t, tpoints, h, kernel)
+function construct_w(t::Number, tpoints::AbstractVector, h::Number, kernel::CollocationKernel)
     W = @. calckernel((kernel,), ((tpoints - t) / (tpoints[end] - tpoints[begin])) / h) / h
     return Diagonal(W)
 end
@@ -69,7 +71,8 @@ Additionally, we can use interpolation methods from
 data from intermediate timesteps. In this case, pass any of the methods like
 `QuadraticInterpolation` as `interp`, and the timestamps to sample from as `tpoints_sample`.
 """
-function collocate_data(data, tpoints, kernel = TriangularKernel(), bandwidth = nothing)
+function collocate_data(data::AbstractMatrix, tpoints::AbstractVector,
+        kernel::CollocationKernel = TriangularKernel(), bandwidth::Union{Number, Nothing} = nothing)
     if !fast_scalar_indexing(data) || !fast_scalar_indexing(tpoints)
         throw(ArgumentError("collocate_data requires arrays that support fast scalar indexing. " *
                             "GPU arrays are not supported. Please use CPU arrays instead."))
@@ -105,6 +108,14 @@ function collocate_data(data, tpoints, kernel = TriangularKernel(), bandwidth = 
     return estimated_derivative, estimated_solution
 end
 
+# Convenience method for 1D vector data (kernel-based)
+function collocate_data(data::AbstractVector, tpoints::AbstractVector,
+        kernel::CollocationKernel = TriangularKernel(), bandwidth::Union{Number, Nothing} = nothing)
+    du, u = collocate_data(reshape(data, 1, :), tpoints, kernel, bandwidth)
+    return vec(du), vec(u)
+end
+
+# Convenience method for 1D vector data (interpolation-based)
 @views function collocate_data(data::AbstractVector, tpoints::AbstractVector,
         tpoints_sample::AbstractVector, interp, args...)
     du, u = collocate_data(reshape(data, 1, :), tpoints, tpoints_sample, interp, args...)
