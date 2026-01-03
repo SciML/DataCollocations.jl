@@ -34,7 +34,7 @@ function trueODEfunc(du, u, p, t)
 end
 
 prob_trueode = ODEProblem(trueODEfunc, u0, tspan)
-data = Array(solve(prob_trueode, Tsit5(); saveat = tsteps)) .+ 0.1randn(2, 300)
+data = Array(solve(prob_trueode, Tsit5(); saveat = tsteps)) .+ 0.1 * randn(2, 300)
 
 du, u = collocate_data(data, tsteps, EpanechnikovKernel())
 

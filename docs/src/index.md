@@ -56,7 +56,7 @@ u0 = [2.0; 0.0]
 tspan = (0.0, 1.5)
 prob = ODEProblem(trueODEfunc, u0, tspan)
 tsteps = range(tspan[1], tspan[2]; length = 300)
-data = Array(solve(prob, Tsit5(); saveat = tsteps)) .+ 0.1*randn(2, 300)
+data = Array(solve(prob, Tsit5(); saveat = tsteps)) .+ 0.1 * randn(2, 300)
 
 # Method 1: Kernel smoothing (for noisy data)
 du, u = collocate_data(data, tsteps, EpanechnikovKernel())

@@ -121,19 +121,6 @@ u′, u = collocate_data(data, tpoints, tpoints_sample, interp, args...)
 - `u′`: Estimated derivatives
 - `u`: Smoothed data
 
-## Citation
-
-If you use SmoothedCollocation.jl in your research, please cite:
-
-```bibtex
-@article{rackauckas2020universal,
-  title={Universal differential equations for scientific machine learning},
-  author={Rackauckas, Christopher and Ma, Yingbo and Martensen, Julius and Warner, Collin and Zubov, Kirill and Supekar, Rohit and Skinner, Dominic and Ramadhan, Ali and Edelman, Alan},
-  journal={arXiv preprint arXiv:2001.04385},
-  year={2020}
-}
-```
-
 ## Contributing
 
 Contributions are welcome! Please see the [contributing guidelines](CONTRIBUTING.md) for more information.
@@ -145,7 +132,7 @@ Contributions are welcome! Please see the [contributing guidelines](CONTRIBUTING
 - [OrdinaryDiffEq.jl](https://github.com/SciML/OrdinaryDiffEq.jl) - ODE solvers
 - [NoiseRobustDifferentiation.jl](https://adrianhill.de/NoiseRobustDifferentiation.jl/dev/examples/) - Specialized library for estimating derivatives from very noisy data
 
-## Cite Us
+## Citation
 
 If you use DataCollocations.jl in your research, please cite the collocation methodology paper:
 
