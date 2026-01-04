@@ -71,11 +71,17 @@ Additionally, we can use interpolation methods from
 data from intermediate timesteps. In this case, pass any of the methods like
 `QuadraticInterpolation` as `interp`, and the timestamps to sample from as `tpoints_sample`.
 """
-function collocate_data(data::AbstractMatrix, tpoints::AbstractVector,
-        kernel::CollocationKernel = TriangularKernel(), bandwidth::Union{Number, Nothing} = nothing)
+function collocate_data(
+        data::AbstractMatrix, tpoints::AbstractVector,
+        kernel::CollocationKernel = TriangularKernel(), bandwidth::Union{Number, Nothing} = nothing
+    )
     if !fast_scalar_indexing(data) || !fast_scalar_indexing(tpoints)
-        throw(ArgumentError("collocate_data requires arrays that support fast scalar indexing. " *
-                            "GPU arrays are not supported. Please use CPU arrays instead."))
+        throw(
+            ArgumentError(
+                "collocate_data requires arrays that support fast scalar indexing. " *
+                    "GPU arrays are not supported. Please use CPU arrays instead."
+            )
+        )
     end
     _one = oneunit(first(data))
     _zero = zero(first(data))
@@ -83,7 +89,7 @@ function collocate_data(data::AbstractMatrix, tpoints::AbstractVector,
     e2 = [_zero; _one; _zero]
     n = length(tpoints)
     bandwidth = bandwidth === nothing ?
-                (n^(-1 / 5)) * (n^(-3 / 35)) * ((log(n))^(-1 / 16)) : bandwidth
+        (n^(-1 / 5)) * (n^(-3 / 35)) * ((log(n))^(-1 / 16)) : bandwidth
 
     Wd = similar(data, n, size(data, 1))
     WT1 = similar(data, n, 2)
@@ -109,15 +115,19 @@ function collocate_data(data::AbstractMatrix, tpoints::AbstractVector,
 end
 
 # Convenience method for 1D vector data (kernel-based)
-function collocate_data(data::AbstractVector, tpoints::AbstractVector,
-        kernel::CollocationKernel = TriangularKernel(), bandwidth::Union{Number, Nothing} = nothing)
+function collocate_data(
+        data::AbstractVector, tpoints::AbstractVector,
+        kernel::CollocationKernel = TriangularKernel(), bandwidth::Union{Number, Nothing} = nothing
+    )
     du, u = collocate_data(reshape(data, 1, :), tpoints, kernel, bandwidth)
     return vec(du), vec(u)
 end
 
 # Convenience method for 1D vector data (interpolation-based)
-@views function collocate_data(data::AbstractVector, tpoints::AbstractVector,
-        tpoints_sample::AbstractVector, interp, args...)
+@views function collocate_data(
+        data::AbstractVector, tpoints::AbstractVector,
+        tpoints_sample::AbstractVector, interp, args...
+    )
     du, u = collocate_data(reshape(data, 1, :), tpoints, tpoints_sample, interp, args...)
     return du[1, :], u[1, :]
 end
