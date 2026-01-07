@@ -162,7 +162,7 @@ plot!(title="Derivative Estimation with Cubic Splines", xlabel="Time")
 DataInterpolations methods work seamlessly with multidimensional systems:
 
 ```julia
-# 2D system example
+# A 2D system example
 t_2d = [0.0, π/4, π/2, 3π/4, π]
 x_data = cos.(t_2d)
 y_data = sin.(t_2d)

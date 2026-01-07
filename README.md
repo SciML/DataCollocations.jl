@@ -45,6 +45,15 @@ DataCollocations.jl offers two distinct methodologies for data collocation, each
 
 ## Installation
 
+Since this package is not yet registered, install it directly from GitHub:
+
+```julia
+using Pkg
+Pkg.add(url="https://github.com/SciML/DataCollocations.jl")
+```
+
+Once registered in the General registry:
+
 ```julia
 using Pkg
 Pkg.add("DataCollocations")

@@ -49,6 +49,7 @@ using OrdinaryDiffEq
 # Generate some noisy data from an ODE
 function trueODEfunc(du, u, p, t)
     true_A = [-0.1 2.0; -2.0 -0.1]
+    # Compute du = A * (u.^3) using transpose for row/column operations
     du .= ((u .^ 3)'true_A)'
 end
 

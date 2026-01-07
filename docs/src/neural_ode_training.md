@@ -150,8 +150,8 @@ scatter(tsteps, data')
 plot!(nn_sol)
 ```
 
-While this doesn't look great, it has the characteristics of the
-full solution all throughout the timeseries, but it does have a drift.
+While this initial fit shows some drift from the true solution, it captures the
+general characteristics of the dynamics throughout the timeseries.
 We can continue to optimize like this, or we can use this as the
 initial condition to the next phase of our fitting:
 
