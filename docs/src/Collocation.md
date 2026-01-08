@@ -6,8 +6,9 @@ on a numerical differential equation solver by building a smoothed
 collocating polynomial and using this to estimate the true `(u',u)`
 pairs, at which point `u'-f(u,p,t)` can be directly estimated as a
 loss to determine the correct parameters `p`. This method can be
-extremely fast and robust to noise, though, because it does not
-accumulate through time, is not as exact as other methods.
+extremely fast and robust to noise. However, because it does not
+accumulate through time, it is not as exact as methods that integrate
+the ODE forward.
 
 !!! note
     
