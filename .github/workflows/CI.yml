@@ -13,28 +13,5 @@ concurrency:
 
 jobs:
   tests:
-    name: "Tests"
-    strategy:
-      fail-fast: false
-      matrix:
-        version:
-          - "1"
-          - "lts"
-          - "pre"
-        os:
-          - ubuntu-latest
-        arch:
-          - x64
-        include:
-          - version: "1.10"
-            os: windows-latest
-            arch: x64
-          - version: "1.10"
-            os: macOS-latest
-            arch: x64
-    uses: "SciML/.github/.github/workflows/tests.yml@v1"
-    with:
-      julia-version: "${{ matrix.version }}"
-      julia-arch: "${{ matrix.arch }}"
-      os: "${{ matrix.os }}"
+    uses: "SciML/.github/.github/workflows/grouped-tests.yml@v1"
     secrets: "inherit"
