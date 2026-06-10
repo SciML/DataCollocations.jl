@@ -6,7 +6,7 @@ if GROUP == "QA"
     Pkg.activate(joinpath(@__DIR__, "qa"))
     Pkg.develop(PackageSpec(path = dirname(@__DIR__)))
     Pkg.instantiate()
-    include("qa.jl")
+    include(joinpath(@__DIR__, "qa", "qa.jl"))
 else
     using DataCollocations
     using Test
