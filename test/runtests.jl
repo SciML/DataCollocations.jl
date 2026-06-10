@@ -1,4 +1,9 @@
 using Pkg
+using DataCollocations
+using Test
+using OrdinaryDiffEq
+using DataInterpolations
+using JLArrays
 
 const GROUP = get(ENV, "GROUP", "All")
 
@@ -8,12 +13,6 @@ if GROUP == "QA"
     Pkg.instantiate()
     include(joinpath(@__DIR__, "qa", "qa.jl"))
 else
-    using DataCollocations
-    using Test
-    using OrdinaryDiffEq
-    using DataInterpolations
-    using JLArrays
-
     @testset "DataCollocations.jl" begin
         bounded_support_kernels = [
             EpanechnikovKernel(), UniformKernel(), TriangularKernel(),
