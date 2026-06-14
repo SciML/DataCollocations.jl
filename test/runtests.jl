@@ -1,9 +1,6 @@
 using Pkg
-using DataCollocations
+using SafeTestsets
 using Test
-using OrdinaryDiffEq
-using DataInterpolations
-using JLArrays
 
 const GROUP = get(ENV, "GROUP", "All")
 
@@ -14,16 +11,11 @@ if GROUP == "QA"
     include(joinpath(@__DIR__, "qa", "qa.jl"))
 else
     @testset "DataCollocations.jl" begin
-        bounded_support_kernels = [
-            EpanechnikovKernel(), UniformKernel(), TriangularKernel(),
-            QuarticKernel(), TriweightKernel(), TricubeKernel(), CosineKernel(),
-        ]
+        @safetestset "Kernel Functions" begin
+            using DataCollocations
+            using Test
+            include("kernels_setup.jl")
 
-        unbounded_support_kernels = [
-            GaussianKernel(), LogisticKernel(), SigmoidKernel(), SilvermanKernel(),
-        ]
-
-        @testset "Kernel Functions" begin
             ts = collect(-5.0:0.1:5.0)
             @testset "Kernels with support from -1 to 1" begin
                 minus_one_index = findfirst(x -> ==(x, -1.0), ts)
@@ -54,7 +46,12 @@ else
             end
         end
 
-        @testset "Collocation of data" begin
+        @safetestset "Collocation of data" begin
+            using DataCollocations
+            using OrdinaryDiffEq
+            using Test
+            include("kernels_setup.jl")
+
             f(u, p, t) = p .* u
             rc = 2
             ps = repeat([-0.001], rc)
@@ -75,7 +72,11 @@ else
             end
         end
 
-        @testset "DataInterpolations Extension" begin
+        @safetestset "DataInterpolations Extension" begin
+            using DataCollocations
+            using DataInterpolations
+            using Test
+
             # Test with simple data
             t = 0.0:0.1:1.0
             data = sin.(t)
@@ -87,7 +88,11 @@ else
             @test length(u) == length(tpoints_sample)
         end
 
-        @testset "Interface Compatibility" begin
+        @safetestset "Interface Compatibility" begin
+            using DataCollocations
+            using JLArrays
+            using Test
+
             @testset "BigFloat support" begin
                 # Test that BigFloat inputs are supported and eltype is preserved
                 tpoints = BigFloat.(collect(range(0.0, stop = 10.0, length = 30)))
