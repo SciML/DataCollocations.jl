@@ -17,8 +17,7 @@ Before getting to the explanation, here's some code to start with. We will follo
 ```@example collocation_cp
 using ComponentArrays, Lux, DiffEqFlux, OrdinaryDiffEq, SciMLSensitivity, Optimization,
       OptimizationOptimisers, Plots
-using DataCollocations
-using DataCollocations: EpanechnikovKernel
+using DataCollocations: collocate_data, EpanechnikovKernel
 
 using Random
 rng = Xoshiro(0)
