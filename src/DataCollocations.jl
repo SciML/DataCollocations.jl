@@ -1,6 +1,6 @@
 module DataCollocations
 
-using LinearAlgebra
+using LinearAlgebra: Diagonal, det, mul!
 using ArrayInterface: fast_scalar_indexing
 
 export collocate_data
