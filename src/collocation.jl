@@ -1,14 +1,25 @@
 abstract type CollocationKernel end
+"""Epanechnikov kernel for `collocate_data`."""
 struct EpanechnikovKernel <: CollocationKernel end
+"""Uniform kernel for `collocate_data`."""
 struct UniformKernel <: CollocationKernel end
+"""Triangular kernel for `collocate_data`."""
 struct TriangularKernel <: CollocationKernel end
+"""Quartic kernel for `collocate_data`."""
 struct QuarticKernel <: CollocationKernel end
+"""Triweight kernel for `collocate_data`."""
 struct TriweightKernel <: CollocationKernel end
+"""Tricube kernel for `collocate_data`."""
 struct TricubeKernel <: CollocationKernel end
+"""Gaussian kernel for `collocate_data`."""
 struct GaussianKernel <: CollocationKernel end
+"""Cosine kernel for `collocate_data`."""
 struct CosineKernel <: CollocationKernel end
+"""Logistic kernel for `collocate_data`."""
 struct LogisticKernel <: CollocationKernel end
+"""Sigmoid kernel for `collocate_data`."""
 struct SigmoidKernel <: CollocationKernel end
+"""Silverman kernel for `collocate_data`."""
 struct SilvermanKernel <: CollocationKernel end
 
 function calckernel(kernel::CollocationKernel, t::T) where {T}
