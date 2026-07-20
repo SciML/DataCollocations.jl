@@ -18,6 +18,17 @@ the ODE forward.
 
 ```@docs
 collocate_data
+EpanechnikovKernel
+UniformKernel
+TriangularKernel
+QuarticKernel
+TriweightKernel
+TricubeKernel
+GaussianKernel
+CosineKernel
+LogisticKernel
+SigmoidKernel
+SilvermanKernel
 ```
 
 ## Kernel Choice
@@ -33,4 +44,3 @@ The smoothed kernels are regression splines that provide robust estimates for no
 **For noisy data**: Use `EpanechnikovKernel()` or `GaussianKernel()` with appropriate bandwidth.
 **For fast computation**: Use `TriangularKernel()` or `UniformKernel()`.
 **For very smooth results**: Use `GaussianKernel()` or higher-order kernels.
-

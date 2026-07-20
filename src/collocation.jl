@@ -1,25 +1,80 @@
 abstract type CollocationKernel end
-"""Epanechnikov kernel for `collocate_data`."""
+
+"""
+    EpanechnikovKernel()
+
+Epanechnikov smoothing kernel for `collocate_data`.
+"""
 struct EpanechnikovKernel <: CollocationKernel end
-"""Uniform kernel for `collocate_data`."""
+
+"""
+    UniformKernel()
+
+Uniform smoothing kernel for `collocate_data`.
+"""
 struct UniformKernel <: CollocationKernel end
-"""Triangular kernel for `collocate_data`."""
+
+"""
+    TriangularKernel()
+
+Triangular smoothing kernel for `collocate_data`.
+"""
 struct TriangularKernel <: CollocationKernel end
-"""Quartic kernel for `collocate_data`."""
+
+"""
+    QuarticKernel()
+
+Quartic smoothing kernel for `collocate_data`.
+"""
 struct QuarticKernel <: CollocationKernel end
-"""Triweight kernel for `collocate_data`."""
+
+"""
+    TriweightKernel()
+
+Triweight smoothing kernel for `collocate_data`.
+"""
 struct TriweightKernel <: CollocationKernel end
-"""Tricube kernel for `collocate_data`."""
+
+"""
+    TricubeKernel()
+
+Tricube smoothing kernel for `collocate_data`.
+"""
 struct TricubeKernel <: CollocationKernel end
-"""Gaussian kernel for `collocate_data`."""
+
+"""
+    GaussianKernel()
+
+Gaussian smoothing kernel for `collocate_data`.
+"""
 struct GaussianKernel <: CollocationKernel end
-"""Cosine kernel for `collocate_data`."""
+
+"""
+    CosineKernel()
+
+Cosine smoothing kernel for `collocate_data`.
+"""
 struct CosineKernel <: CollocationKernel end
-"""Logistic kernel for `collocate_data`."""
+
+"""
+    LogisticKernel()
+
+Logistic smoothing kernel for `collocate_data`.
+"""
 struct LogisticKernel <: CollocationKernel end
-"""Sigmoid kernel for `collocate_data`."""
+
+"""
+    SigmoidKernel()
+
+Sigmoid smoothing kernel for `collocate_data`.
+"""
 struct SigmoidKernel <: CollocationKernel end
-"""Silverman kernel for `collocate_data`."""
+
+"""
+    SilvermanKernel()
+
+Silverman smoothing kernel for `collocate_data`.
+"""
 struct SilvermanKernel <: CollocationKernel end
 
 function calckernel(kernel::CollocationKernel, t::T) where {T}
@@ -55,32 +110,40 @@ function construct_w(t::Number, tpoints::AbstractVector, h::Number, kernel::Coll
 end
 
 """
-    u′, u = collocate_data(data, tpoints, kernel = TriangularKernel(), bandwidth=nothing)
-    u′, u = collocate_data(data, tpoints, tpoints_sample, interp, args...)
+    du, u = collocate_data(data, tpoints, kernel = TriangularKernel(), bandwidth = nothing)
+    du, u = collocate_data(data, tpoints, tpoints_sample, interp, args...)
 
-Computes a non-parametrically smoothed estimate of `u'` and `u` given the `data`, where each
-column is a snapshot of the timeseries at `tpoints[i]`.
+Estimate smoothed derivative and state samples from timeseries data.
 
-For kernels, the following exist:
+For kernel smoothing, each column of matrix-valued `data` is a snapshot at
+`tpoints[i]`. Vector-valued `data` is treated as a one-dimensional timeseries. The
+returned `du` and `u` have the same dimensionality convention as `data`.
 
-  - EpanechnikovKernel
-  - UniformKernel
-  - TriangularKernel
-  - QuarticKernel
-  - TriweightKernel
-  - TricubeKernel
-  - GaussianKernel
-  - CosineKernel
-  - LogisticKernel
-  - SigmoidKernel
-  - SilvermanKernel
+## Arguments
 
-https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2631937/
+- `data`: observations to smooth, either as a vector or as a matrix with observations
+  stored by column.
+- `tpoints`: timestamps corresponding to the observations in `data`.
+- `kernel`: smoothing kernel instance, such as `TriangularKernel()` or
+  `GaussianKernel()`.
+- `bandwidth`: kernel bandwidth. When `nothing`, an adaptive default based on
+  `length(tpoints)` is used.
+- `tpoints_sample`: timestamps where the interpolation-based method evaluates `u`
+  and `du`.
+- `interp`: `DataInterpolations.jl` interpolation constructor used by the extension
+  method.
+- `args...`: additional arguments forwarded to `interp`.
+
+Available kernels are `EpanechnikovKernel`, `UniformKernel`, `TriangularKernel`,
+`QuarticKernel`, `TriweightKernel`, `TricubeKernel`, `GaussianKernel`,
+`CosineKernel`, `LogisticKernel`, `SigmoidKernel`, and `SilvermanKernel`.
 
 Additionally, we can use interpolation methods from
 [DataInterpolations.jl](https://github.com/SciML/DataInterpolations.jl) to generate
 data from intermediate timesteps. In this case, pass any of the methods like
 `QuadraticInterpolation` as `interp`, and the timestamps to sample from as `tpoints_sample`.
+
+See also: [Kernel smoothing and collocation methods](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2631937/).
 """
 function collocate_data(
         data::AbstractMatrix, tpoints::AbstractVector,

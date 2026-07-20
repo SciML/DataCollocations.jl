@@ -3,6 +3,7 @@ using JET
 
 run_qa(
     DataCollocations;
+    api_docs_kwargs = (; rendered = true),
     explicit_imports = true,
     ei_kwargs = (;
         # `fast_scalar_indexing` is not (yet) public in ArrayInterface.
