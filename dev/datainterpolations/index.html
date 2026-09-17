@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>DataInterpolations Methods for Clean Data · DataCollocations.jl</title><meta name="title" content="DataInterpolations Methods for Clean Data · DataCollocations.jl"/><meta property="og:title" content="DataInterpolations Methods for Clean Data · DataCollocations.jl"/><meta property="twitter:title" content="DataInterpolations Methods for Clean Data · DataCollocations.jl"/><meta name="description" content="Documentation for DataCollocations.jl."/><meta property="og:description" content="Documentation for DataCollocations.jl."/><meta property="twitter:description" content="Documentation for DataCollocations.jl."/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.63.2/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">DataCollocations.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li><a class="tocitem" href="../neural_ode_training/">Neural ODE Training with Kernel Smoothing</a></li><li class="is-active"><a class="tocitem" href>DataInterpolations Methods for Clean Data</a><ul class="internal"><li><a class="tocitem" href="#When-to-Use-DataInterpolations-Methods"><span>When to Use DataInterpolations Methods</span></a></li><li><a class="tocitem" href="#Basic-Usage"><span>Basic Usage</span></a></li><li><a class="tocitem" href="#Available-Interpolation-Methods"><span>Available Interpolation Methods</span></a></li><li><a class="tocitem" href="#Method-Comparison"><span>Method Comparison</span></a></li><li><a class="tocitem" href="#Derivative-Estimation-Accuracy"><span>Derivative Estimation Accuracy</span></a></li><li><a class="tocitem" href="#Multidimensional-Data"><span>Multidimensional Data</span></a></li><li><a class="tocitem" href="#Performance-Characteristics"><span>Performance Characteristics</span></a></li><li><a class="tocitem" href="#Choosing-the-Right-DataInterpolations-Method"><span>Choosing the Right DataInterpolations Method</span></a></li><li><a class="tocitem" href="#Example:-Processing-Simulation-Output"><span>Example: Processing Simulation Output</span></a></li><li><a class="tocitem" href="#Error-Handling"><span>Error Handling</span></a></li><li><a class="tocitem" href="#Integration-with-Kernel-Methods"><span>Integration with Kernel Methods</span></a></li></ul></li><li><a class="tocitem" href="../optimization_tutorials/">Performance Optimization Techniques</a></li><li><a class="tocitem" href="../Collocation/">API Reference</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>DataInterpolations Methods for Clean Data</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>DataInterpolations Methods for Clean Data</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/SciML/DataCollocations.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/SciML/DataCollocations.jl/blob/main/docs/src/datainterpolations.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="DataInterpolations.jl-Integration"><a class="docs-heading-anchor" href="#DataInterpolations.jl-Integration">DataInterpolations.jl Integration</a><a id="DataInterpolations.jl-Integration-1"></a><a class="docs-heading-anchor-permalink" href="#DataInterpolations.jl-Integration" title="Permalink"></a></h1><p>DataCollocations.jl seamlessly integrates with <a href="https://github.com/SciML/DataInterpolations.jl">DataInterpolations.jl</a> to provide exact interpolation methods for clean data. These methods assume minimal noise and provide exact interpolation through data points.</p><h2 id="When-to-Use-DataInterpolations-Methods"><a class="docs-heading-anchor" href="#When-to-Use-DataInterpolations-Methods">When to Use DataInterpolations Methods</a><a id="When-to-Use-DataInterpolations-Methods-1"></a><a class="docs-heading-anchor-permalink" href="#When-to-Use-DataInterpolations-Methods" title="Permalink"></a></h2><p>DataInterpolations methods are ideal when:</p><ul><li><strong>Clean data</strong>: Measurements have minimal noise</li><li><strong>Simulation data</strong>: Outputs from numerical simulations  </li><li><strong>Sparse sampling</strong>: Few data points that need interpolation</li><li><strong>Exact fitting required</strong>: Need curves that pass exactly through data points</li></ul><p>For noisy data, use the kernel smoothing methods instead.</p><h2 id="Basic-Usage"><a class="docs-heading-anchor" href="#Basic-Usage">Basic Usage</a><a id="Basic-Usage-1"></a><a class="docs-heading-anchor-permalink" href="#Basic-Usage" title="Permalink"></a></h2><pre><code class="language-julia hljs">using DataCollocations, DataInterpolations
+using Plots
+
+# Clean sparse data
+t_sparse = [0.0, 0.5, 1.2, 2.1, 3.0, 4.5, 5.0]
+data_sparse = sin.(t_sparse)  # Clean simulation data
+
+# Define dense sampling points
+t_dense = 0:0.1:5.0
+
+# Use cubic spline interpolation
+du_interp, u_interp = collocate_data(
+    data_sparse, t_sparse, collect(t_dense), CubicSpline
+)
+
+# Plot results
+scatter(t_sparse, data_sparse, label=&quot;Original Data&quot;, ms=6)
+plot!(t_dense, u_interp, label=&quot;Cubic Spline&quot;, lw=2)
+plot!(t_dense, sin.(t_dense), label=&quot;True Function&quot;, lw=1, ls=:dash)</code></pre><img src="dfa4a462.svg" alt="Example block output"/><h2 id="Available-Interpolation-Methods"><a class="docs-heading-anchor" href="#Available-Interpolation-Methods">Available Interpolation Methods</a><a id="Available-Interpolation-Methods-1"></a><a class="docs-heading-anchor-permalink" href="#Available-Interpolation-Methods" title="Permalink"></a></h2><h3 id="Linear-Methods"><a class="docs-heading-anchor" href="#Linear-Methods">Linear Methods</a><a id="Linear-Methods-1"></a><a class="docs-heading-anchor-permalink" href="#Linear-Methods" title="Permalink"></a></h3><p>Simple and fast for data with linear trends:</p><pre><code class="language-julia hljs"># Linear interpolation
+du, u = collocate_data(data, t_original, t_new, LinearInterpolation)</code></pre><h3 id="Polynomial-Methods"><a class="docs-heading-anchor" href="#Polynomial-Methods">Polynomial Methods</a><a id="Polynomial-Methods-1"></a><a class="docs-heading-anchor-permalink" href="#Polynomial-Methods" title="Permalink"></a></h3><p>Higher-order polynomial interpolation:</p><pre><code class="language-julia hljs"># Quadratic interpolation
+du, u = collocate_data(data, t_original, t_new, QuadraticInterpolation)
+
+# Cubic spline interpolation (recommended for smooth data)
+du, u = collocate_data(data, t_original, t_new, CubicSpline)</code></pre><h3 id="Specialized-Methods"><a class="docs-heading-anchor" href="#Specialized-Methods">Specialized Methods</a><a id="Specialized-Methods-1"></a><a class="docs-heading-anchor-permalink" href="#Specialized-Methods" title="Permalink"></a></h3><pre><code class="language-julia hljs"># Akima interpolation (good for avoiding overshooting)
+du, u = collocate_data(data, t_original, t_new, AkimaInterpolation)
+
+# B-spline interpolation with custom parameters
+du, u = collocate_data(data, t_original, t_new, 
+                       BSplineInterpolation(3, 2, :uniform, :uniform))</code></pre><h2 id="Method-Comparison"><a class="docs-heading-anchor" href="#Method-Comparison">Method Comparison</a><a id="Method-Comparison-1"></a><a class="docs-heading-anchor-permalink" href="#Method-Comparison" title="Permalink"></a></h2><p>Let&#39;s compare different interpolation methods on clean simulation data:</p><pre><code class="language-julia hljs">using DataCollocations, DataInterpolations, Plots, OrdinaryDiffEq
+
+# Generate clean simulation data (sparse sampling)
+function harmonic_oscillator!(du, u, p, t)
+    ω = p[1]
+    du[1] = u[2]
+    du[2] = -ω^2 * u[1]
+end
+
+u0 = [1.0, 0.0]
+tspan = (0.0, 2π)
+prob = ODEProblem(harmonic_oscillator!, u0, tspan, [1.0])
+
+# Sparse time points (only 8 points over full period)
+t_sparse = range(0.0, 2π, length=8)
+sol_sparse = solve(prob, Tsit5(), saveat=t_sparse)
+data_sparse = Array(sol_sparse)
+
+# Dense evaluation points
+t_dense = range(0.0, 2π, length=100)
+
+# Compare different interpolation methods
+methods = [
+    (&quot;Linear&quot;, LinearInterpolation),
+    (&quot;Quadratic&quot;, QuadraticInterpolation),
+    (&quot;Cubic Spline&quot;, CubicSpline),
+    (&quot;Akima&quot;, AkimaInterpolation)
+]
+
+# True solution for comparison
+sol_true = solve(prob, Tsit5(), saveat=t_dense)
+data_true = Array(sol_true)
+
+plots = []
+for (name, method) in methods
+    du_interp, u_interp = collocate_data(data_sparse, t_sparse, collect(t_dense), method)
+
+    # Plot first component (position)
+    p = scatter(t_sparse, data_sparse[1,:], label=&quot;Sparse Data&quot;, ms=6, alpha=0.7)
+    plot!(p, t_dense, data_true[1,:], label=&quot;True Solution&quot;, lw=2, color=:blue, ls=:dash)
+    plot!(p, t_dense, u_interp[1,:], label=&quot;$name&quot;, lw=2, color=:red)
+    plot!(p, title=&quot;$name Interpolation&quot;, xlabel=&quot;Time&quot;, ylabel=&quot;Position&quot;)
+
+    # Calculate RMSE
+    rmse = sqrt(sum((u_interp[1,:] - data_true[1,:]).^2) / length(t_dense))
+    plot!(p, title=&quot;$name (RMSE: $(round(rmse, digits=4)))&quot;)
+
+    push!(plots, p)
+end
+
+plot(plots..., layout=(2,2), size=(800,600))</code></pre><img src="f08226d6.svg" alt="Example block output"/><h2 id="Derivative-Estimation-Accuracy"><a class="docs-heading-anchor" href="#Derivative-Estimation-Accuracy">Derivative Estimation Accuracy</a><a id="Derivative-Estimation-Accuracy-1"></a><a class="docs-heading-anchor-permalink" href="#Derivative-Estimation-Accuracy" title="Permalink"></a></h2><p>DataInterpolations methods provide analytical derivatives, making them highly accurate for clean data:</p><pre><code class="language-julia hljs">using DataCollocations, DataInterpolations, Plots
+# Test derivative accuracy
+function test_function(t)
+    return t^3 - 2*t^2 + t
+end
+
+function true_derivative(t)
+    return 3*t^2 - 4*t + 1
+end
+
+# Sparse clean data
+t_test = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+data_test = test_function.(t_test)
+
+# Dense evaluation
+t_eval = 0:0.1:3.0
+du_cubic, u_cubic = collocate_data(data_test, t_test, collect(t_eval), CubicSpline)
+
+# Compare derivatives
+true_derivs = true_derivative.(t_eval)
+
+plot(t_eval, true_derivs, label=&quot;True Derivative&quot;, lw=3, color=:blue)
+plot!(t_eval, du_cubic, label=&quot;Cubic Spline Derivative&quot;, lw=2, color=:red)
+scatter!(t_test, data_test, label=&quot;Data Points&quot;, ms=6, color=:green)
+plot!(title=&quot;Derivative Estimation with Cubic Splines&quot;, xlabel=&quot;Time&quot;)</code></pre><img src="a7ce6bfd.svg" alt="Example block output"/><h2 id="Multidimensional-Data"><a class="docs-heading-anchor" href="#Multidimensional-Data">Multidimensional Data</a><a id="Multidimensional-Data-1"></a><a class="docs-heading-anchor-permalink" href="#Multidimensional-Data" title="Permalink"></a></h2><p>DataInterpolations methods work seamlessly with multidimensional systems:</p><pre><code class="language-julia hljs">using DataCollocations, DataInterpolations, Plots
+# A 2D system example
+t_2d = [0.0, π/4, π/2, 3π/4, π]
+x_data = cos.(t_2d)
+y_data = sin.(t_2d)
+data_2d = [x_data, y_data]
+data_matrix = hcat(data_2d...)&#39;
+
+# Interpolate to dense grid
+t_dense_2d = range(0, π, length=50)
+du_2d, u_2d = collocate_data(data_matrix, t_2d, collect(t_dense_2d), CubicSpline)
+
+# Plot phase portrait
+scatter(x_data, y_data, label=&quot;Sparse Data&quot;, ms=8)
+plot!(u_2d[1,:], u_2d[2,:], label=&quot;Cubic Spline&quot;, lw=2)
+plot!(cos.(t_dense_2d), sin.(t_dense_2d), label=&quot;True Curve&quot;, lw=2, ls=:dash)
+plot!(aspect_ratio=:equal, title=&quot;2D Interpolation&quot;)</code></pre><img src="d7792117.svg" alt="Example block output"/><h2 id="Performance-Characteristics"><a class="docs-heading-anchor" href="#Performance-Characteristics">Performance Characteristics</a><a id="Performance-Characteristics-1"></a><a class="docs-heading-anchor-permalink" href="#Performance-Characteristics" title="Permalink"></a></h2><p>DataInterpolations methods are highly efficient for appropriate use cases:</p><pre><code class="language-julia hljs">using BenchmarkTools
+
+# Performance comparison on clean data
+n = 50
+t_bench = sort(rand(n) * 10)
+data_bench = sin.(t_bench)  # Clean data
+t_eval_bench = 0:0.1:10
+
+println(&quot;Performance on clean data:&quot;)
+@btime collocate_data($data_bench, $t_bench, $t_eval_bench, LinearInterpolation);
+@btime collocate_data($data_bench, $t_bench, $t_eval_bench, CubicSpline);
+
+# Compare with kernel smoothing for same clean data
+@btime collocate_data(reshape($data_bench, 1, :), $t_bench, EpanechnikovKernel(), 0.1);</code></pre><h2 id="Choosing-the-Right-DataInterpolations-Method"><a class="docs-heading-anchor" href="#Choosing-the-Right-DataInterpolations-Method">Choosing the Right DataInterpolations Method</a><a id="Choosing-the-Right-DataInterpolations-Method-1"></a><a class="docs-heading-anchor-permalink" href="#Choosing-the-Right-DataInterpolations-Method" title="Permalink"></a></h2><h3 id="For-Most-Applications:-CubicSpline"><a class="docs-heading-anchor" href="#For-Most-Applications:-CubicSpline">For Most Applications: <code>CubicSpline</code></a><a id="For-Most-Applications:-CubicSpline-1"></a><a class="docs-heading-anchor-permalink" href="#For-Most-Applications:-CubicSpline" title="Permalink"></a></h3><ul><li>Smooth curves with continuous derivatives</li><li>Good balance of accuracy and smoothness</li><li>Handles moderate curvature well</li></ul><h3 id="For-Linear-Trends:-LinearInterpolation"><a class="docs-heading-anchor" href="#For-Linear-Trends:-LinearInterpolation">For Linear Trends: <code>LinearInterpolation</code></a><a id="For-Linear-Trends:-LinearInterpolation-1"></a><a class="docs-heading-anchor-permalink" href="#For-Linear-Trends:-LinearInterpolation" title="Permalink"></a></h3><ul><li>Fastest computation</li><li>Appropriate when data is expected to be piecewise linear</li><li>Simple and robust</li></ul><h3 id="For-Avoiding-Overshoot:-AkimaInterpolation"><a class="docs-heading-anchor" href="#For-Avoiding-Overshoot:-AkimaInterpolation">For Avoiding Overshoot: <code>AkimaInterpolation</code></a><a id="For-Avoiding-Overshoot:-AkimaInterpolation-1"></a><a class="docs-heading-anchor-permalink" href="#For-Avoiding-Overshoot:-AkimaInterpolation" title="Permalink"></a></h3><ul><li>Reduces oscillations near data points</li><li>Good for data with sharp changes</li><li>More stable than high-order polynomials</li></ul><h3 id="For-Flexibility:-BSplineInterpolation"><a class="docs-heading-anchor" href="#For-Flexibility:-BSplineInterpolation">For Flexibility: <code>BSplineInterpolation</code></a><a id="For-Flexibility:-BSplineInterpolation-1"></a><a class="docs-heading-anchor-permalink" href="#For-Flexibility:-BSplineInterpolation" title="Permalink"></a></h3><ul><li>Controllable smoothness through degree parameter</li><li>Can handle various boundary conditions</li><li>Good for complex curve shapes</li></ul><h2 id="Example:-Processing-Simulation-Output"><a class="docs-heading-anchor" href="#Example:-Processing-Simulation-Output">Example: Processing Simulation Output</a><a id="Example:-Processing-Simulation-Output-1"></a><a class="docs-heading-anchor-permalink" href="#Example:-Processing-Simulation-Output" title="Permalink"></a></h2><p>A common use case is processing output from numerical simulations:</p><pre><code class="language-julia hljs">using DataCollocations, DataInterpolations, Plots, OrdinaryDiffEq
+# Simulate solving an ODE with adaptive time stepping
+function lorenz!(du, u, p, t)
+    σ, ρ, β = p
+    du[1] = σ * (u[2] - u[1])
+    du[2] = u[1] * (ρ - u[3]) - u[2]
+    du[3] = u[1] * u[2] - β * u[3]
+end
+
+u0 = [1.0, 1.0, 1.0]
+p = [10.0, 28.0, 8/3]
+tspan = (0.0, 1.0)
+prob = ODEProblem(lorenz!, u0, tspan, p)
+
+# Solve with adaptive time stepping (irregular output)
+sol = solve(prob, Tsit5())
+t_irregular = sol.t
+data_irregular = Array(sol)
+
+# Convert to regular grid using cubic splines
+t_regular = range(0.0, 1.0, length=200)
+du_regular, u_regular = collocate_data(data_irregular, t_irregular,
+                                       collect(t_regular), CubicSpline)
+
+# Plot comparison
+plot(t_irregular, data_irregular[1,:], label=&quot;Irregular Output&quot;,
+     marker=:circle, ms=2, lw=1)
+plot!(t_regular, u_regular[1,:], label=&quot;Regular Grid&quot;, lw=2)
+plot!(title=&quot;Converting Adaptive Output to Regular Grid&quot;)</code></pre><img src="9de2ba59.svg" alt="Example block output"/><h2 id="Error-Handling"><a class="docs-heading-anchor" href="#Error-Handling">Error Handling</a><a id="Error-Handling-1"></a><a class="docs-heading-anchor-permalink" href="#Error-Handling" title="Permalink"></a></h2><p>DataInterpolations methods may fail on problematic data:</p><pre><code class="language-julia hljs">using DataCollocations, DataInterpolations
+# Handle potential interpolation failures
+function safe_interpolate(data, t_data, t_eval, method)
+    try
+        return collocate_data(data, t_data, t_eval, method)
+    catch e
+        @warn &quot;Interpolation with $method failed: $e&quot;
+        @info &quot;Falling back to linear interpolation&quot;
+        return collocate_data(data, t_data, t_eval, LinearInterpolation)
+    end
+end
+
+# Example with problematic data (duplicate time points)
+t_bad = [0.0, 1.0, 1.0, 2.0]  # Duplicate at t=1.0
+data_bad = [1.0, 2.0, 2.1, 3.0]
+t_eval = 0:0.1:2.0
+
+du_safe, u_safe = safe_interpolate(data_bad, t_bad, t_eval, CubicSpline)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">([1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0  …  0.8999999999999999, 0.8999999999999999, 0.8999999999999999, 0.8999999999999999, 0.8999999999999999, 0.8999999999999999, 0.8999999999999999, 0.8999999999999999, 0.8999999999999999, 0.8999999999999999], [1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9  …  2.19, 2.2800000000000002, 2.37, 2.46, 2.55, 2.64, 2.73, 2.8200000000000003, 2.91, 3.0])</code></pre><h2 id="Integration-with-Kernel-Methods"><a class="docs-heading-anchor" href="#Integration-with-Kernel-Methods">Integration with Kernel Methods</a><a id="Integration-with-Kernel-Methods-1"></a><a class="docs-heading-anchor-permalink" href="#Integration-with-Kernel-Methods" title="Permalink"></a></h2><p>You can combine both approaches in your workflow:</p><pre><code class="language-julia hljs"># Step 1: Use DataInterpolations for initial processing of clean sparse data
+du_clean, u_clean = collocate_data(clean_sparse_data, t_sparse, t_intermediate, CubicSpline)
+
+# Step 2: Add noise simulation  
+noisy_data = u_clean + noise_level * randn(size(u_clean))
+
+# Step 3: Use kernel smoothing to handle the noise
+du_final, u_final = collocate_data(noisy_data, t_intermediate, EpanechnikovKernel())</code></pre><p>This page demonstrates how DataCollocations.jl&#39;s DataInterpolations integration provides exact, efficient interpolation for clean data scenarios, complementing the kernel smoothing methods for noisy data.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../neural_ode_training/">« Neural ODE Training with Kernel Smoothing</a><a class="docs-footer-nextpage" href="../optimization_tutorials/">Performance Optimization Techniques »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Thursday 17 September 2026 15:01">Thursday 17 September 2026</span>. Using Julia version 1.13.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
