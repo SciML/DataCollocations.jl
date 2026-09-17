@@ -14,7 +14,7 @@ For noisy data, use the kernel smoothing methods instead.
 
 ## Basic Usage
 
-```julia
+```@example di_basic
 using DataCollocations, DataInterpolations
 using Plots
 
@@ -72,7 +72,7 @@ du, u = collocate_data(data, t_original, t_new,
 
 Let's compare different interpolation methods on clean simulation data:
 
-```julia
+```@example di_compare
 using DataCollocations, DataInterpolations, Plots, OrdinaryDiffEq
 
 # Generate clean simulation data (sparse sampling)
@@ -130,7 +130,8 @@ plot(plots..., layout=(2,2), size=(800,600))
 
 DataInterpolations methods provide analytical derivatives, making them highly accurate for clean data:
 
-```julia
+```@example di_deriv
+using DataCollocations, DataInterpolations, Plots
 # Test derivative accuracy
 function test_function(t)
     return t^3 - 2*t^2 + t
@@ -161,7 +162,8 @@ plot!(title="Derivative Estimation with Cubic Splines", xlabel="Time")
 
 DataInterpolations methods work seamlessly with multidimensional systems:
 
-```julia
+```@example di_2d
+using DataCollocations, DataInterpolations, Plots
 # A 2D system example
 t_2d = [0.0, π/4, π/2, 3π/4, π]
 x_data = cos.(t_2d)
@@ -227,7 +229,8 @@ println("Performance on clean data:")
 
 A common use case is processing output from numerical simulations:
 
-```julia
+```@example di_lorenz
+using DataCollocations, DataInterpolations, Plots, OrdinaryDiffEq
 # Simulate solving an ODE with adaptive time stepping
 function lorenz!(du, u, p, t)
     σ, ρ, β = p
@@ -262,7 +265,8 @@ plot!(title="Converting Adaptive Output to Regular Grid")
 
 DataInterpolations methods may fail on problematic data:
 
-```julia
+```@example di_safe
+using DataCollocations, DataInterpolations
 # Handle potential interpolation failures
 function safe_interpolate(data, t_data, t_eval, method)
     try
